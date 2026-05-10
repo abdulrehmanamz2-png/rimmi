@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Future Portfolio SaaS</title>
+    <title>Ultimate Business Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --main-color: #00d2ff; --bg-color: #0f172a; }
         
@@ -16,137 +17,133 @@
             justify-content: center; 
             align-items: center; 
             min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* Background Animation */
-        body::before {
-            content: ""; position: absolute; width: 300px; height: 300px;
-            background: var(--main-color); filter: blur(150px);
-            top: 10%; left: 10%; border-radius: 50%; z-index: -1; opacity: 0.4;
+            padding: 20px 0;
         }
 
         .container {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 40px;
+            padding: 30px;
             border-radius: 24px;
             box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-            max-width: 400px;
+            max-width: 450px;
             width: 90%;
             text-align: center;
-            animation: fadeIn 1s ease-in;
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        input {
-            width: 100%; padding: 14px; margin: 12px 0;
+        input, textarea {
+            width: 100%; padding: 12px; margin: 8px 0;
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px; color: white; outline: none;
-            transition: 0.3s;
+            border-radius: 10px; color: white; outline: none;
+            box-sizing: border-box; font-family: inherit;
         }
 
-        input:focus { border-color: var(--main-color); box-shadow: 0 0 10px var(--main-color); }
+        textarea { height: 80px; resize: none; }
 
         button {
             background: linear-gradient(45deg, var(--main-color), #3a7bd5);
-            color: white; border: none; padding: 16px; border-radius: 12px;
-            width: 100%; font-weight: bold; cursor: pointer;
-            margin-top: 20px; transition: 0.3s; text-transform: uppercase;
+            color: white; border: none; padding: 15px; border-radius: 12px;
+            width: 100%; font-weight: bold; cursor: pointer; margin-top: 15px;
         }
-
-        button:hover { transform: scale(1.03); box-shadow: 0 10px 20px rgba(0, 210, 255, 0.4); }
 
         #profile-img {
-            width: 130px; height: 130px; border-radius: 50%;
-            object-fit: cover; border: 4px solid var(--main-color);
-            margin-bottom: 20px; box-shadow: 0 0 20px var(--main-color);
+            width: 110px; height: 110px; border-radius: 50%;
+            object-fit: cover; border: 3px solid var(--main-color);
+            box-shadow: 0 0 15px var(--main-color);
         }
 
-        .wa-btn {
-            background: #25D366; color: white; padding: 12px 25px;
-            border-radius: 50px; text-decoration: none; display: inline-block;
-            margin-top: 20px; font-weight: 600; transition: 0.3s;
+        .social-links { display: flex; justify-content: center; gap: 15px; margin-top: 20px; flex-wrap: wrap; }
+        .social-links a { 
+            color: white; font-size: 24px; transition: 0.3s; 
+            width: 45px; height: 45px; background: rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: center; border-radius: 50%;
+            text-decoration: none;
         }
+        .social-links a:hover { transform: scale(1.2); color: var(--main-color); }
 
-        .wa-btn:hover { background: #1da851; transform: translateY(-3px); }
-
-        #portfolio-result { display: none; }
+        .description { color: #cbd5e1; font-size: 14px; line-height: 1.6; margin: 15px 0; text-align: justify; }
     </style>
 </head>
 <body>
 
     <div class="container" id="input-form">
-        <h1 style="margin-top:0; font-size: 24px;">AI Portfolio <span style="color: var(--main-color);">Gen</span></h1>
-        <p style="color: #94a3b8; font-size: 14px;">Create a premium profile in seconds</p>
+        <h2 style="color: var(--main-color); margin-bottom: 5px;">Business Builder 🚀</h2>
+        <p style="font-size: 12px; color: #94a3b8;">Fill your details for the world to see</p>
         
         <input type="text" id="name" placeholder="Full Name">
-        <input type="text" id="skill" placeholder="Professional Title (e.g. Expert Splicer)">
-        <input type="text" id="image-url" placeholder="Image URL (Direct Link)">
+        <input type="text" id="skill" placeholder="Your Title (e.g. Splicer / Editor)">
+        <textarea id="about" placeholder="Tell us about yourself (Description)..."></textarea>
+        
+        <input type="text" id="img" placeholder="Photo Link (URL)">
         <input type="number" id="phone" placeholder="WhatsApp Number (92...)">
+        <input type="text" id="fb" placeholder="Facebook Profile Link">
+        <input type="text" id="ig" placeholder="Instagram Username">
+        <input type="email" id="email" placeholder="Email Address">
+
+        <label style="font-size: 12px; color: #94a3b8;">Brand Color:</label>
+        <input type="color" id="color" value="#00d2ff">
         
-        <label style="font-size: 12px; color: #94a3b8; margin-top: 10px; display: block;">Pick Branding Color:</label>
-        <input type="color" id="color-picker" value="#00d2ff" style="height: 45px; cursor: pointer;">
-        
-        <button onclick="saveData()">Generate Portfolio</button>
+        <button onclick="saveData()">Launch Portfolio</button>
     </div>
 
-    <div id="portfolio-result" class="container">
-        <img id="profile-img" src="" alt="User">
-        <h1 id="out-name" style="margin: 5px 0;"></h1>
-        <p id="out-skill" style="color: var(--main-color); font-weight: 500; font-size: 18px; margin-bottom: 25px;"></p>
-        <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
-            <a id="wa-link" href="#" target="_blank" class="wa-btn">Let's Connect</a>
-        </div>
-        <p style="font-size: 12px; margin-top: 30px; color: #64748b; cursor: pointer;" onclick="resetAll()">← Create New One</p>
+    <div id="portfolio-result" class="container" style="display: none;">
+        <img id="out-img" src="" alt="User">
+        <h1 id="out-name" style="margin: 10px 0 5px 0;"></h1>
+        <p id="out-skill" style="color: var(--main-color); margin: 0; font-weight: bold;"></p>
+        
+        <div class="description" id="out-about"></div>
+
+        <div class="social-links" id="links-container">
+            </div>
+        
+        <p style="font-size: 12px; margin-top: 30px; color: #64748b; cursor: pointer;" onclick="resetAll()">← Edit Details</p>
     </div>
 
     <script>
-        window.onload = function() {
-            var data = JSON.parse(localStorage.getItem("premiumData"));
-            if(data) { display(data); }
-        }
-
         function saveData() {
-            var userObj = {
+            var data = {
                 name: document.getElementById("name").value,
                 skill: document.getElementById("skill").value,
-                img: document.getElementById("image-url").value,
+                about: document.getElementById("about").value,
+                img: document.getElementById("img").value,
                 phone: document.getElementById("phone").value,
-                theme: document.getElementById("color-picker").value
+                fb: document.getElementById("fb").value,
+                ig: document.getElementById("ig").value,
+                email: document.getElementById("email").value,
+                color: document.getElementById("color").value
             };
-
-            if(userObj.name && userObj.skill && userObj.phone) {
-                localStorage.setItem("premiumData", JSON.stringify(userObj));
-                display(userObj);
-            } else {
-                alert("Please fill in all details to generate!");
-            }
+            localStorage.setItem("finalPortfolio", JSON.stringify(data));
+            display(data);
         }
 
         function display(data) {
             document.getElementById("input-form").style.display = "none";
             document.getElementById("portfolio-result").style.display = "block";
-            document.documentElement.style.setProperty('--main-color', data.theme);
+            document.documentElement.style.setProperty('--main-color', data.color);
             
             document.getElementById("out-name").innerText = data.name;
             document.getElementById("out-skill").innerText = data.skill;
-            document.getElementById("wa-link").href = "https://wa.me/" + data.phone;
+            document.getElementById("out-about").innerText = data.about;
+            document.getElementById("out-img").src = data.img || 'https://ui-avatars.com/api/?name='+data.name;
+
+            var linksHTML = '';
+            if(data.phone) linksHTML += `<a href="https://wa.me/${data.phone}" target="_blank"><i class="fab fa-whatsapp"></i></a>`;
+            if(data.fb) linksHTML += `<a href="${data.fb}" target="_blank"><i class="fab fa-facebook-f"></i></a>`;
+            if(data.ig) linksHTML += `<a href="https://instagram.com/${data.ig}" target="_blank"><i class="fab fa-instagram"></i></a>`;
+            if(data.email) linksHTML += `<a href="mailto:${data.email}"><i class="fas fa-envelope"></i></a>`;
             
-            if(data.img) {
-                var img = document.getElementById("profile-img");
-                img.src = data.img;
-                img.onerror = function() { this.src = 'https://ui-avatars.com/api/?name=' + data.name + '&background=random'; };
-            }
+            document.getElementById("links-container").innerHTML = linksHTML;
         }
 
-        function resetAll() {
-            localStorage.clear();
-            location.reload();
+        function resetAll() { localStorage.clear(); location.reload(); }
+
+        window.onload = function() {
+            var saved = JSON.parse(localStorage.getItem("finalPortfolio"));
+            if(saved) display(saved);
         }
     </script>
 </body>
 </html>
+
