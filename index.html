@@ -2,39 +2,50 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional SaaS Builder</title>
+    <title>SaaS Portfolio Creator</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; text-align: center; padding: 20px; background-color: #f4f7f6; }
+        /* Ye variable humein dynamically color change karne mein madad dega */
+        :root { --main-color: #6c63ff; }
+        
+        body { font-family: 'Segoe UI', sans-serif; text-align: center; padding: 20px; background-color: #f4f7f6; transition: 0.3s; }
         .box { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 400px; margin: auto; }
         input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; }
-        button { background-color: #6c63ff; color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer; }
-        #profile-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid #6c63ff; margin-bottom: 15px; display: none; }
-        #portfolio-result { display: none; margin-top: 30px; border-top: 5px solid #6c63ff; }
-        .wa-btn { background-color: #25D366; color: white; padding: 10px 20px; border-radius: 50px; text-decoration: none; display: inline-block; margin-top: 15px; }
+        
+        /* Buttons aur Borders ab variable color use karenge */
+        button { background-color: var(--main-color); color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer; }
+        #profile-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid var(--main-color); margin-bottom: 15px; display: none; }
+        #portfolio-result { display: none; margin-top: 30px; border-top: 8px solid var(--main-color); }
+        .wa-btn { background-color: #25D366; color: white; padding: 10px 20px; border-radius: 50px; text-decoration: none; display: inline-block; margin-top: 15px; font-weight: bold; }
+        
+        .theme-label { display: block; margin-top: 10px; font-weight: bold; color: #555; }
+        #color-picker { height: 40px; padding: 2px; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <div class="box" id="input-form">
-        <h2 style="color: #6c63ff;">Portfolio Creator 🛠️</h2>
+        <h2 style="color: var(--main-color);">SaaS Portfolio 🛠️</h2>
         <p>Apni details bhar kar website banayein</p>
         
-        <input type="text" id="name" placeholder="Pura Naan">
+        <input type="text" id="name" placeholder="Pura Naam">
         <input type="text" id="skill" placeholder="Aap kya kaam karte hain?">
-        <input type="text" id="image-url" placeholder="Apni Photo ka Link (URL)">
-        <input type="number" id="phone" placeholder="WhatsApp Number (92300...)">
+        <input type="text" id="image-url" placeholder="Photo Link (JPG/PNG)">
+        <input type="number" id="phone" placeholder="WhatsApp Number (92...)">
         
-        <button onclick="saveData()">Create My Portfolio</button>
+        <label class="theme-label">Apni Pasand ka Rang Chunein:</label>
+        <input type="color" id="color-picker" value="#6c63ff">
+        
+        <button onclick="saveData()" style="margin-top: 10px;">Create My Portfolio</button>
     </div>
 
     <div id="portfolio-result" class="box">
-        <img id="profile-img" src="" alt="Profile">
+        <img id="profile-img" src="" alt="Profile" onerror="this.style.display='none'">
         <h1 id="out-name"></h1>
         <h3 id="out-skill" style="color: #666;"></h3>
         <p>Mujhse kaam ke liye rabta karein:</p>
-        <a id="wa-link" href="#" class="wa-btn">Send WhatsApp Message</a>
+        <a id="wa-link" href="#" class="wa-btn">Send WhatsApp</a>
         <br><br>
-        <button style="background: #ff4757;" onclick="resetAll()">Reset / Delete</button>
+        <button style="background: #ff4757;" onclick="resetAll()">Reset / Create New</button>
     </div>
 
     <script>
@@ -48,20 +59,24 @@
                 name: document.getElementById("name").value,
                 skill: document.getElementById("skill").value,
                 img: document.getElementById("image-url").value,
-                phone: document.getElementById("phone").value
+                phone: document.getElementById("phone").value,
+                theme: document.getElementById("color-picker").value
             };
 
             if(userObj.name && userObj.skill && userObj.phone) {
                 localStorage.setItem("myPortfolioData", JSON.stringify(userObj));
                 display(userObj);
             } else {
-                alert("Please saari fields bharein!");
+                alert("Please saari details bharein!");
             }
         }
 
         function display(data) {
             document.getElementById("input-form").style.display = "none";
             document.getElementById("portfolio-result").style.display = "block";
+            
+            // Theme color apply karna
+            document.documentElement.style.setProperty('--main-color', data.theme);
             
             document.getElementById("out-name").innerText = data.name;
             document.getElementById("out-skill").innerText = data.skill;
@@ -81,6 +96,3 @@
     </script>
 </body>
 </html>
-
-
-       
