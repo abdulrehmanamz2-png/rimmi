@@ -136,6 +136,24 @@
             
             document.getElementById("links-container").innerHTML = linksHTML;
         }
+        #cancel-btn {
+    position: absolute; /* Ye zaroori hai taake button move kar sake */
+    transition: 0.1s; /* Thora smooth movement ke liye */
+        }
+        const btn = document.getElementById('cancel-btn');
+
+// Jab user mouse button ke upar laye (hover kare)
+btn.addEventListener('mouseover', function() {
+    // Screen ki width aur height ke hisab se random jagah dhoondna
+    const x = Math.random() * (window.innerWidth - btn.clientWidth);
+    const y = Math.random() * (window.innerHeight - btn.clientHeight);
+    
+    // Button ko naye coordinates par bhej dena
+    btn.style.left = x + 'px';
+    btn.style.top = y + 'px';
+});
+
+                
 
         function resetAll() { localStorage.clear(); location.reload(); }
 
