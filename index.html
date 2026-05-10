@@ -1,57 +1,112 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=2.0">
-    <title>Abdul Rehman's tool</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future Portfolio SaaS</title>
     <style>
-        /* Ye variable humein dynamically color change karne mein madad dega */
-        :root { --main-color: #6c63ff; }
+        :root { --main-color: #00d2ff; --bg-color: #0f172a; }
         
-        body { font-family: 'Segoe UI', sans-serif; text-align: center; padding: 40px; background-color: #f4f7f6; transition: 0.3s; }
-        .box { background: Blue; padding: 25px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 400px; margin: auto; }
-        input { width: 100%; padding: 12px; margin: 10px 0; border: 5px solid #ddd; border-radius: 10px; box-sizing: border-box; }
-        
-        /* Buttons aur Borders ab variable color use karenge */
-        button { background-color: orange (--main-color); color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer; }
-        #profile-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid var(--main-color); margin-bottom: 15px; display: none; }
-        #portfolio-result { display: none; margin-top: 30px; border-top: 8px solid var(--main-color); }
-        .wa-btn { background-color: #25D366; color: white; padding: 10px 20px; border-radius: 50px; text-decoration: none; display: inline-block; margin-top: 15px; font-weight: bold; }
-        
-        .theme-label { display: block; margin-top: 10px; font-weight: bold; color: #555; }
-        #color-picker { height: 40px; padding: 2px; cursor: pointer; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: var(--bg-color); 
+            color: white; 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Background Animation */
+        body::before {
+            content: ""; position: absolute; width: 300px; height: 300px;
+            background: var(--main-color); filter: blur(150px);
+            top: 10%; left: 10%; border-radius: 50%; z-index: -1; opacity: 0.4;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        input {
+            width: 100%; padding: 14px; margin: 12px 0;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px; color: white; outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus { border-color: var(--main-color); box-shadow: 0 0 10px var(--main-color); }
+
+        button {
+            background: linear-gradient(45deg, var(--main-color), #3a7bd5);
+            color: white; border: none; padding: 16px; border-radius: 12px;
+            width: 100%; font-weight: bold; cursor: pointer;
+            margin-top: 20px; transition: 0.3s; text-transform: uppercase;
+        }
+
+        button:hover { transform: scale(1.03); box-shadow: 0 10px 20px rgba(0, 210, 255, 0.4); }
+
+        #profile-img {
+            width: 130px; height: 130px; border-radius: 50%;
+            object-fit: cover; border: 4px solid var(--main-color);
+            margin-bottom: 20px; box-shadow: 0 0 20px var(--main-color);
+        }
+
+        .wa-btn {
+            background: #25D366; color: white; padding: 12px 25px;
+            border-radius: 50px; text-decoration: none; display: inline-block;
+            margin-top: 20px; font-weight: 600; transition: 0.3s;
+        }
+
+        .wa-btn:hover { background: #1da851; transform: translateY(-3px); }
+
+        #portfolio-result { display: none; }
     </style>
 </head>
 <body>
 
-    <div class="box" id="input-form">
-        <h2 style="color: orange (--main-color);">Abdul Rehman's tool 🛠️</h2>
-        <p>apni details fill krain or jis tarha ki web chaho wo banao</p>
+    <div class="container" id="input-form">
+        <h1 style="margin-top:0; font-size: 24px;">AI Portfolio <span style="color: var(--main-color);">Gen</span></h1>
+        <p style="color: #94a3b8; font-size: 14px;">Create a premium profile in seconds</p>
         
-        <input type="text" id="name" placeholder="full Naam">
-        <input type="text" id="skill" placeholder="Aap kya kaam karte hain?">
-        <input type="text" id="image-url" placeholder="Photo Link (JPG/PNG)">
+        <input type="text" id="name" placeholder="Full Name">
+        <input type="text" id="skill" placeholder="Professional Title (e.g. Expert Splicer)">
+        <input type="text" id="image-url" placeholder="Image URL (Direct Link)">
         <input type="number" id="phone" placeholder="WhatsApp Number (92...)">
-        <input type="text" id="email" placeholder="email address?">
         
-        <label class="theme-label">chose colors:</label>
-        <input type="color" id="color-picker" value="#6c63ff">
+        <label style="font-size: 12px; color: #94a3b8; margin-top: 10px; display: block;">Pick Branding Color:</label>
+        <input type="color" id="color-picker" value="#00d2ff" style="height: 45px; cursor: pointer;">
         
-        <button onclick="saveData()" style="margin-top: 10px;">Create My Portfolio</button>
+        <button onclick="saveData()">Generate Portfolio</button>
     </div>
 
-    <div id="portfolio-result" class="box">
-        <img id="profile-img" src="" alt="Profile" onerror="this.style.display='none'">
-        <h1 id="out-name"></h1>
-        <h3 id="out-skill" style="color: #666;"></h3>
-        <p>contact me:</p>
-        <a id="wa-link" href="#" class="wa-btn">Send WhatsApp</a>
-        <br><br>
-        <button style="background: #ff4757;" onclick="resetAll()">Reset / Create New</button>
+    <div id="portfolio-result" class="container">
+        <img id="profile-img" src="" alt="User">
+        <h1 id="out-name" style="margin: 5px 0;"></h1>
+        <p id="out-skill" style="color: var(--main-color); font-weight: 500; font-size: 18px; margin-bottom: 25px;"></p>
+        <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+            <a id="wa-link" href="#" target="_blank" class="wa-btn">Let's Connect</a>
+        </div>
+        <p style="font-size: 12px; margin-top: 30px; color: #64748b; cursor: pointer;" onclick="resetAll()">← Create New One</p>
     </div>
 
     <script>
         window.onload = function() {
-            var data = JSON.parse(localStorage.getItem("myPortfolioData"));
+            var data = JSON.parse(localStorage.getItem("premiumData"));
             if(data) { display(data); }
         }
 
@@ -65,18 +120,16 @@
             };
 
             if(userObj.name && userObj.skill && userObj.phone) {
-                localStorage.setItem("myPortfolioData", JSON.stringify(userObj));
+                localStorage.setItem("premiumData", JSON.stringify(userObj));
                 display(userObj);
             } else {
-                alert("Please saari details bharein!");
+                alert("Please fill in all details to generate!");
             }
         }
 
         function display(data) {
             document.getElementById("input-form").style.display = "none";
             document.getElementById("portfolio-result").style.display = "block";
-            
-            // Theme color apply karna
             document.documentElement.style.setProperty('--main-color', data.theme);
             
             document.getElementById("out-name").innerText = data.name;
@@ -84,9 +137,9 @@
             document.getElementById("wa-link").href = "https://wa.me/" + data.phone;
             
             if(data.img) {
-                var imgElement = document.getElementById("profile-img");
-                imgElement.src = data.img;
-                imgElement.style.display = "inline-block";
+                var img = document.getElementById("profile-img");
+                img.src = data.img;
+                img.onerror = function() { this.src = 'https://ui-avatars.com/api/?name=' + data.name + '&background=random'; };
             }
         }
 
