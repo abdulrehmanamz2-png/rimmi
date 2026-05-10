@@ -3,165 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Business Portfolio</title>
+    <title>SaaS Master Builder | Abdul Rehman</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --main-color: #00d2ff; --bg-color: #0f172a; }
+        :root { --accent: #00f2fe; --bg: #030712; --card-bg: rgba(255, 255, 255, 0.03); }
         
+        * { box-sizing: border-box; }
         body { 
-            font-family: 'Poppins', sans-serif; 
-            background: var(--bg-color); 
-            color: white; 
-            margin: 0; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh;
-            padding: 20px 0;
+            font-family: 'Segoe UI', Roboto, sans-serif; 
+            background: var(--bg); color: white; margin: 0; 
+            scroll-behavior: smooth; overflow-x: hidden;
         }
 
-        .container {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 24px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-            max-width: 450px;
-            width: 90%;
-            text-align: center;
+        /* --- 1. Navigation --- */
+        nav {
+            padding: 20px; display: flex; justify-content: space-between;
+            position: fixed; width: 100%; top: 0; background: rgba(3, 7, 18, 0.8);
+            backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05);
         }
+        nav .logo { font-weight: bold; font-size: 22px; color: var(--accent); }
+        nav .links a { color: white; text-decoration: none; margin-left: 20px; font-size: 14px; }
 
+        /* --- 2. Hero Slider --- */
+        .slider-section {
+            height: 80vh; margin-top: 80px; display: flex; align-items: center; justify-content: center;
+            position: relative;
+        }
+        .slide-container {
+            width: 90%; max-width: 1000px; height: 400px; position: relative;
+            perspective: 1000px;
+        }
+        .slide {
+            position: absolute; width: 100%; height: 100%; display: none;
+            align-items: center; gap: 40px; animation: slideIn 0.8s ease-out;
+        }
+        .slide.active { display: flex; }
+        .slide-img {
+            flex: 1; height: 100%; border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            transform: rotateY(-10deg); transition: 0.5s;
+            object-fit: cover; border: 2px solid var(--accent);
+        }
+        .slide-img:hover { transform: rotateY(0deg) scale(1.02); }
+        .slide-content { flex: 1; }
+        .slide-content h2 { font-size: 40px; color: var(--accent); margin-bottom: 10px; }
+
+        @keyframes slideIn { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* --- 3. Main Builder --- */
+        .main-container { padding: 80px 20px; text-align: center; }
+        .glass-card {
+            background: var(--card-bg); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1); padding: 40px;
+            border-radius: 30px; max-width: 500px; margin: 0 auto;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
         input, textarea {
-            width: 100%; padding: 12px; margin: 8px 0;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px; color: white; outline: none;
-            box-sizing: border-box; font-family: inherit;
+            width: 100%; padding: 15px; margin: 10px 0; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white;
         }
-
-        textarea { height: 80px; resize: none; }
-
-        button {
-            background: linear-gradient(45deg, var(--main-color), #3a7bd5);
-            color: white; border: none; padding: 15px; border-radius: 12px;
-            width: 100%; font-weight: bold; cursor: pointer; margin-top: 15px;
+        .btn-launch {
+            background: linear-gradient(90deg, #00f2fe, #4facfe);
+            color: black; border: none; padding: 15px 30px; border-radius: 12px;
+            font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px;
+            transition: 0.3s;
         }
+        .btn-launch:hover { transform: scale(1.05); box-shadow: 0 0 20px var(--accent); }
 
-        #profile-img {
-            width: 110px; height: 110px; border-radius: 50%;
-            object-fit: cover; border: 3px solid var(--main-color);
-            box-shadow: 0 0 15px var(--main-color);
-        }
+        /* --- 4. Portfolio Preview --- */
+        #portfolio-result { display: none; margin-top: 50px; }
+        .user-img { width: 150px; height: 150px; border-radius: 50%; border: 4px solid var(--accent); }
 
-        .social-links { display: flex; justify-content: center; gap: 15px; margin-top: 20px; flex-wrap: wrap; }
-        .social-links a { 
-            color: white; font-size: 24px; transition: 0.3s; 
-            width: 45px; height: 45px; background: rgba(255,255,255,0.1);
-            display: flex; align-items: center; justify-content: center; border-radius: 50%;
-            text-decoration: none;
-        }
-        .social-links a:hover { transform: scale(1.2); color: var(--main-color); }
-
-        .description { color: #cbd5e1; font-size: 14px; line-height: 1.6; margin: 15px 0; text-align: justify; }
+        /* --- 5. Footer --- */
+        footer { padding: 50px; background: #010409; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 50px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; text-align: left; }
     </style>
 </head>
 <body>
 
-    <div class="container" id="input-form">
-        <h2 style="color: var(--main-color); margin-bottom: 5px;">Business Builder 🚀</h2>
-        <p style="font-size: 12px; color: #94a3b8;">Fill your details for the world to see</p>
-        
-        <input type="text" id="name" placeholder="Full Name">
-        <input type="text" id="skill" placeholder="Your Title (e.g. Splicer / Editor)">
-        <textarea id="about" placeholder="Tell us about yourself (Description)..."></textarea>
-        
-        <input type="text" id="img" placeholder="Photo Link (URL)">
-        <input type="number" id="phone" placeholder="WhatsApp Number (92...)">
-        <input type="text" id="fb" placeholder="Facebook Profile Link">
-        <input type="text" id="ig" placeholder="Instagram Username">
-        <input type="email" id="email" placeholder="Email Address">
+    <nav>
+        <div class="logo">SaaSBuilder.AI</div>
+        <div class="links">
+            <a href="#about">About</a>
+            <a href="#builder">Tool</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
 
-        <label style="font-size: 12px; color: #94a3b8;">Brand Color:</label>
-        <input type="color" id="color" value="#00d2ff">
-        
-        <button onclick="saveData()">Launch Portfolio</button>
-    </div>
-
-    <div id="portfolio-result" class="container" style="display: none;">
-        <img id="out-img" src="" alt="User">
-        <h1 id="out-name" style="margin: 10px 0 5px 0;"></h1>
-        <p id="out-skill" style="color: var(--main-color); margin: 0; font-weight: bold;"></p>
-        
-        <div class="description" id="out-about"></div>
-
-        <div class="social-links" id="links-container">
+    <section class="slider-section" id="about">
+        <div class="slide-container">
+            <div class="slide active">
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500" class="slide-img" alt="3D Design">
+                <div class="slide-content">
+                    <h2>Fast & Smart</h2>
+                    <p>Apni website banayein sirf 1 minute mein. Koi coding ki zaroorat nahi!</p>
+                    <button class="btn-launch" style="width: auto;" onclick="window.location.href='#builder'">Try Now</button>
+                </div>
             </div>
-        
-        <p style="font-size: 12px; margin-top: 30px; color: #64748b; cursor: pointer;" onclick="resetAll()">← Edit Details</p>
-    </div>
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=500" class="slide-img" alt="Security">
+                <div class="slide-content">
+                    <h2>Ultra Modern</h2>
+                    <p>Aapki profile dikhegi bilkul futuristic aur glass-style mein.</p>
+                </div>
+            </div>
+        </div>
+        <div style="position: absolute; bottom: 20px;">
+            <button onclick="prevSlide()" style="background:none; border:1px solid white; color:white; border-radius:50%; width:40px; height:40px; cursor:pointer;">←</button>
+            <button onclick="nextSlide()" style="background:none; border:1px solid white; color:white; border-radius:50%; width:40px; height:40px; cursor:pointer;">→</button>
+        </div>
+    </section>
+
+    <section class="main-container" id="builder">
+        <div class="glass-card" id="form-container">
+            <h2 style="margin-top: 0;">Portfolio Generator 🛠️</h2>
+            <p style="color: #888;">Niche di gayi details fill karein</p>
+            
+            <input type="text" id="name" placeholder="Full Name">
+            <input type="text" id="skill" placeholder="Your Profession">
+            <textarea id="about-text" placeholder="About yourself..."></textarea>
+            <input type="text" id="img-url" placeholder="Image Link (JPG/PNG)">
+            <input type="number" id="phone" placeholder="WhatsApp (92...)">
+            
+            <label style="display:block; margin-top:10px; font-size:12px;">Brand Color:</label>
+            <input type="color" id="theme-color" value="#00f2fe">
+
+            <button class="btn-launch" onclick="generate()">Launch Website</button>
+        </div>
+
+        <div id="portfolio-result" class="glass-card">
+            <img id="out-img" src="" class="user-img">
+            <h1 id="out-name" style="margin-bottom:0;"></h1>
+            <p id="out-skill" style="color: var(--accent); margin-top:5px;"></p>
+            <p id="out-about" style="font-size:14px; color:#ccc;"></p>
+            <a id="wa-link" href="#" target="_blank" class="btn-launch" style="display:inline-block; text-decoration:none; color:black;">Connect on WhatsApp</a>
+            <br><br>
+            <button onclick="location.reload()" style="background:none; color:white; border:none; cursor:pointer;">← Edit Details</button>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-grid">
+            <div>
+                <h3 style="color: var(--accent);">About Abdul Rehman</h3>
+                <p style="font-size:14px; color:#888;">Developer & Fiber Splicing Expert. AI aur Coding ke zariye naye solutions banana mera junoon hai.</p>
+            </div>
+            <div>
+                <h3>Quick Links</h3>
+                <p><a href="#" style="color:#888;">Facebook</a></p>
+                <p><a href="#" style="color:#888;">Instagram</a></p>
+            </div>
+            <div>
+                <h3>Contact</h3>
+                <p style="color:#888;">Email: support@saasbuilder.ai</p>
+                <p style="color:#888;">Karachi, Pakistan</p>
+            </div>
+        </div>
+        <p style="margin-top:50px; font-size:12px; color:#444;">© 2024 SaaS Builder AI. All Rights Reserved.</p>
+    </footer>
 
     <script>
-        function saveData() {
-            var data = {
-                name: document.getElementById("name").value,
-                skill: document.getElementById("skill").value,
-                about: document.getElementById("about").value,
-                img: document.getElementById("img").value,
-                phone: document.getElementById("phone").value,
-                fb: document.getElementById("fb").value,
-                ig: document.getElementById("ig").value,
-                email: document.getElementById("email").value,
-                color: document.getElementById("color").value
+        // --- Slider Logic ---
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function showSlide(index) {
+            slides.forEach(s => s.classList.remove('active'));
+            slides[index].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        // --- Portfolio Logic ---
+        function generate() {
+            const data = {
+                name: document.getElementById('name').value,
+                skill: document.getElementById('skill').value,
+                about: document.getElementById('about-text').value,
+                img: document.getElementById('img-url').value,
+                phone: document.getElementById('phone').value,
+                color: document.getElementById('theme-color').value
             };
-            localStorage.setItem("finalPortfolio", JSON.stringify(data));
-            display(data);
-        }
 
-        function display(data) {
-            document.getElementById("input-form").style.display = "none";
-            document.getElementById("portfolio-result").style.display = "block";
-            document.documentElement.style.setProperty('--main-color', data.color);
-            
-            document.getElementById("out-name").innerText = data.name;
-            document.getElementById("out-skill").innerText = data.skill;
-            document.getElementById("out-about").innerText = data.about;
-            document.getElementById("out-img").src = data.img || 'https://ui-avatars.com/api/?name='+data.name;
+            if(!data.name || !data.phone) return alert("Kam az kam Naam aur WhatsApp lazmi hai!");
 
-            var linksHTML = '';
-            if(data.phone) linksHTML += `<a href="https://wa.me/${data.phone}" target="_blank"><i class="fab fa-whatsapp"></i></a>`;
-            if(data.fb) linksHTML += `<a href="${data.fb}" target="_blank"><i class="fab fa-facebook-f"></i></a>`;
-            if(data.ig) linksHTML += `<a href="https://instagram.com/${data.ig}" target="_blank"><i class="fab fa-instagram"></i></a>`;
-            if(data.email) linksHTML += `<a href="mailto:${data.email}"><i class="fas fa-envelope"></i></a>`;
-            
-            document.getElementById("links-container").innerHTML = linksHTML;
-        }
-        #cancel-btn {
-    position: absolute; /* Ye zaroori hai taake button move kar sake */
-    transition: 0.1s; /* Thora smooth movement ke liye */
-        }
-        const btn = document.getElementById('cancel-btn');
+            document.getElementById('form-container').style.display = 'none';
+            document.getElementById('portfolio-result').style.display = 'block';
+            document.documentElement.style.setProperty('--accent', data.color);
 
-// Jab user mouse button ke upar laye (hover kare)
-btn.addEventListener('mouseover', function() {
-    // Screen ki width aur height ke hisab se random jagah dhoondna
-    const x = Math.random() * (window.innerWidth - btn.clientWidth);
-    const y = Math.random() * (window.innerHeight - btn.clientHeight);
-    
-    // Button ko naye coordinates par bhej dena
-    btn.style.left = x + 'px';
-    btn.style.top = y + 'px';
-});
-
-                
-
-        function resetAll() { localStorage.clear(); location.reload(); }
-
-        window.onload = function() {
-            var saved = JSON.parse(localStorage.getItem("finalPortfolio"));
-            if(saved) display(saved);
+            document.getElementById('out-name').innerText = data.name;
+            document.getElementById('out-skill').innerText = data.skill;
+            document.getElementById('out-about').innerText = data.about;
+            document.getElementById('out-img').src = data.img || 'https://ui-avatars.com/api/?name='+data.name;
+            document.getElementById('wa-link').href = "https://wa.me/" + data.phone;
         }
     </script>
 </body>
 </html>
-
