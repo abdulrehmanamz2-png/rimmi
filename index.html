@@ -8,28 +8,30 @@
         .box { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 400px; margin: auto; }
         input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; }
         button { background-color: #6c63ff; color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer; }
-        
+        #profile-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid #6c63ff; margin-bottom: 15px; display: none; }
         #portfolio-result { display: none; margin-top: 30px; border-top: 5px solid #6c63ff; }
-        .wa-btn { background-color: #25D366; text-decoration: none; color: white; padding: 10px 20px; border-radius: 50px; display: inline-block; margin-top: 15px; font-weight: bold; }
+        .wa-btn { background-color: #25D366; color: white; padding: 10px 20px; border-radius: 50px; text-decoration: none; display: inline-block; margin-top: 15px; }
     </style>
 </head>
 <body>
 
     <div class="box" id="input-form">
         <h2 style="color: #6c63ff;">Portfolio Creator 🛠️</h2>
-        <p>Apni details bhar kar website banayein:</p>
+        <p>Apni details bhar kar website banayein</p>
         
-        <input type="text" id="name" placeholder="Pura Naam">
+        <input type="text" id="name" placeholder="Pura Naan">
         <input type="text" id="skill" placeholder="Aap kya kaam karte hain?">
+        <input type="text" id="image-url" placeholder="Apni Photo ka Link (URL)">
         <input type="number" id="phone" placeholder="WhatsApp Number (92300...)">
         
         <button onclick="saveData()">Create My Portfolio</button>
     </div>
 
     <div id="portfolio-result" class="box">
+        <img id="profile-img" src="" alt="Profile">
         <h1 id="out-name"></h1>
         <h3 id="out-skill" style="color: #666;"></h3>
-        <p>Mujhse kaam ke liye yahan rabta karein:</p>
+        <p>Mujhse kaam ke liye rabta karein:</p>
         <a id="wa-link" href="#" class="wa-btn">Send WhatsApp Message</a>
         <br><br>
         <button style="background: #ff4757;" onclick="resetAll()">Reset / Delete</button>
@@ -45,6 +47,7 @@
             var userObj = {
                 name: document.getElementById("name").value,
                 skill: document.getElementById("skill").value,
+                img: document.getElementById("image-url").value,
                 phone: document.getElementById("phone").value
             };
 
@@ -63,6 +66,12 @@
             document.getElementById("out-name").innerText = data.name;
             document.getElementById("out-skill").innerText = data.skill;
             document.getElementById("wa-link").href = "https://wa.me/" + data.phone;
+            
+            if(data.img) {
+                var imgElement = document.getElementById("profile-img");
+                imgElement.src = data.img;
+                imgElement.style.display = "inline-block";
+            }
         }
 
         function resetAll() {
@@ -70,8 +79,8 @@
             location.reload();
         }
     </script>
-
 </body>
 </html>
+
 
        
